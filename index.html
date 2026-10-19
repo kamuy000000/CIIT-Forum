@@ -1,0 +1,55 @@
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="top-bar">
+        <h1>
+            Crazy Forum
+        </h1>
+        <div class="off-screen-menu">
+            <ul>
+                <button type = "button" class="loginButton" onclick = "window.location.href='login.php'">login</button>
+                <button type = "button" class="searchButton" onclick = "window.location.href='search.php'">search</button>
+                <button type = "button" class="createThreadButton" onclick = "window.location.href='create_thread.php'">create thread</button>
+            </ul>
+        </div>
+        </h1>
+                <nav>
+            <div class="ham-menu">
+                <span></span>
+                <span></span>
+                <span></span>  
+            </div>
+        </nav>
+    </div>
+    <div class="main">
+        <ol>
+        </ol>
+    </div>
+    <script src="data.js"></script>
+    <script>
+        console.log(threads);
+        var container = document.querySelector('ol');
+        for (let thread of threads){
+         var html = `
+         <li class = "row">
+                <a href ="thread.html?id=${thread.id}">
+                    <h4 class = "title">
+                        ${thread.title}
+                    </h4>
+            <div class = "bottom">
+                <p class = "content">
+                    ${thread.content}
+                </p>
+                <p class ="comment-count">
+                    ${thread.comments.length} comments
+                </p>
+            </div>
+            </a>
+        </li>
+        `
+        container.insertAdjacentHTML('beforeend', html);
+        }
+
+    </script>
+</body>

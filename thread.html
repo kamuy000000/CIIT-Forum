@@ -1,0 +1,100 @@
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class = "top-bar">
+        <h1>
+            Crazy Forum
+        </h1>
+        <div class="off-screen-menu">
+            <ul>
+                <button type = "button" class="loginButton" onclick = "window.location.href='login.php'">login</button>
+                <button type = "button" class="searchButton" onclick = "window.location.href='search.php'">search</button>
+                <button type = "button" class="createThreadButton" onclick = "window.location.href='create_thread.php'">create thread</button>
+            </ul>
+        </div>
+        </h1>
+                <nav>
+            <div class="ham-menu">
+                <span></span>
+                <span></span>
+                <span></span>  
+            </div>
+        </nav>
+    </div>
+    <div class = "main">
+        <div class= "header"> </div>
+        <div class="thread-content"></div>
+        <textarea></textarea>
+        <button type ="button" id="commentButton">add comment</button>
+        <div class= "comments">
+ </div>
+    </div>
+    <script src="data.js"></script>
+    <script>
+      var id = window.location.search.slice(1).split("=")[1];
+        var thread = threads.find(t => t.id == id);
+        var header = document.querySelector('.header');
+        var headerHtml = `          
+        <h4 class = "title">
+                    ${thread.title}
+                </h4>
+                <div class = "bottom">
+                    <p class = "description">
+                        ${thread.description}
+                    </p>
+                </div> 
+                `
+        header.insertAdjacentHTML('beforeend', headerHtml) 
+
+        function addComment(comment) {
+        var commentHtml = `
+            <div class = "comment">
+                <div class ="top-comment">
+                    <p class = "user">
+                        ${comment.author}
+                    </p>
+                    <p class="comment-ts">
+                        ${new Date(comment.date).toLocaleString()}
+                    </p>
+                </div>
+                <div class ="comment-content">
+                    ${comment.content}
+                </div>
+            </div>
+            `
+            comments.insertAdjacentHTML('beforeend', commentHtml);
+
+        }
+        
+        var comments = document.querySelector('.comments');
+        for (let comment of thread.comments) {
+            addComment(comment);
+        }
+
+        var btn = document.querySelector('#commentButton');
+        var textarea = document.querySelector('textarea');
+        btn.disabled = textarea.value.trim() === "";
+        textarea.addEventListener('input', function() {
+            btn.disabled = textarea.value.trim() === "";
+        });
+        btn.addEventListener('click', function() {
+            var txt = textarea.value.trim();
+            if (txt === "") {
+                btn.disabled = true;
+                return;
+            }
+            var comment = {
+                content: txt,
+                date: Date.now(),
+                author: "User",
+            }
+            addComment(comment);
+            textarea.value = "";
+            btn.disabled = true;
+            thread.comments.push(comment);
+            document.querySelector('.comment-count').textContent = thread.comments.length + " comments";
+            localStorage.setItem("threads", JSON.stringify(threads));
+        });
+    </script>
+</body>
