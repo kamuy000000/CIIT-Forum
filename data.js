@@ -40,7 +40,8 @@ var threads = [
 
 ]
 
-//localStorage.clear();
+// for testing purposes, uncomment the line below to clear threads and comments
+// localStorage.clear();
 if (localStorage && localStorage.getItem("threads")) {
     threads = JSON.parse(localStorage.getItem("threads"));
 } else {

@@ -4,16 +4,14 @@
 <body>
     <div class = "top-bar">
         <h1>
-            Crazy Forum
+            FORUM
         </h1>
         <div class="off-screen-menu">
             <ul>
                 <button type = "button" class="loginButton" onclick = "window.location.href='login.php'">login</button>
                 <button type = "button" class="searchButton" onclick = "window.location.href='search.php'">search</button>
-                <button type = "button" class="createThreadButton" onclick = "window.location.href='create_thread.php'">create thread</button>
             </ul>
         </div>
-        </h1>
                 <nav>
             <div class="ham-menu">
                 <span></span>
@@ -24,7 +22,6 @@
     </div>
     <div class = "main">
         <div class= "header"> </div>
-        <div class="thread-content"></div>
         <textarea></textarea>
         <button type ="button" id="commentButton">add comment</button>
         <div class= "comments">
@@ -93,7 +90,6 @@
             textarea.value = "";
             btn.disabled = true;
             thread.comments.push(comment);
-            document.querySelector('.comment-count').textContent = thread.comments.length + " comments";
             localStorage.setItem("threads", JSON.stringify(threads));
         });
     </script>

@@ -1,7 +1,5 @@
         .off-screen-menu {
-            height: auto;
             width: 100%;
-            max-width: none;
             position: absolute;
             top: 100%;
             left: 0;
@@ -40,7 +38,7 @@
         .ham-menu span {
             height: 4px;
             width: 28px;
-            background-color: #6F86FF;
+            background-color: #41C9F1;
             position: absolute;
             left: 50%;
             top: 50%;
@@ -75,27 +73,52 @@
         button{
             display: block;
             margin: 10px 0;
+            font-family: Roboto;
         }
-        .loginButton{
+        .searchButton, .loginButton, .createThreadButton{
+            background-color: #41C9F1;
+            float: left;
+            padding: 5px 10px;
+            margin-right: 10px;
+        }
+        .searchButton, .loginButton, .createThreadButton:hover{
+            background-color: #21697f;
+        }
+        #cancelButton{
+            float: left;
+            background-color: rgb(236, 159, 159);
+            padding: 5px 10px;
+        }
+        #cancelButton:hover{
+            background-color: rgb(235, 120, 120);
+        }
+        #submitButton{
             float: right;
+            background-color: rgb(200, 247, 200);
+            padding: 5px 10px;
+        }
+        #submitButton:hover{
+            background-color: rgb(120, 235, 120);
         }
         .top-bar{
-            background-color: skyblue;
+            background-color: #02344D;
             padding: 0 40px;
             position: relative;
             min-height: 52px;
             box-sizing: border-box;
         }
         .top-bar h1 {
+            color: white;
             display: flex;
+            font-family: Poppins, sans-serif;
             flex-wrap: wrap;
             align-items: center;
-            margin: 0;
             padding: 8px 0 8px 52px;
         }
         .main{
             background-color: #F6F6EF;
             padding: 10px 40px;
+            font-family: Arial, sans-serif;
         }
         .comments{
             margin: 40px 0;

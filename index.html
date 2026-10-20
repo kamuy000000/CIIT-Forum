@@ -4,16 +4,15 @@
 <body>
     <div class="top-bar">
         <h1>
-            Crazy Forum
+            FORUM
         </h1>
         <div class="off-screen-menu">
             <ul>
                 <button type = "button" class="loginButton" onclick = "window.location.href='login.php'">login</button>
                 <button type = "button" class="searchButton" onclick = "window.location.href='search.php'">search</button>
-                <button type = "button" class="createThreadButton" onclick = "window.location.href='create_thread.php'">create thread</button>
+                <button type = "button" class="createThreadButton" id="createThreadButton">create thread</button>
             </ul>
         </div>
-        </h1>
                 <nav>
             <div class="ham-menu">
                 <span></span>
@@ -26,9 +25,24 @@
         <ol>
         </ol>
     </div>
+    <dialog id="popup">
+        <form method="dialog">
+            <h3>Create a new thread</h3>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" required></textarea>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+            <menu>
+                <button id="cancelButton">Cancel</button>
+                <button id="submitButton">Submit</button>
+            </menu>
+        </form>
     <script src="data.js"></script>
     <script>
-        console.log(threads);
+        // debugging purposes
+        // console.log(threads);
         var container = document.querySelector('ol');
         for (let thread of threads){
          var html = `
@@ -50,6 +64,39 @@
         `
         container.insertAdjacentHTML('beforeend', html);
         }
+
+        var btnCancel = document.querySelector('#cancelButton');
+        btnCancel.addEventListener('click', function() {
+            var popup = document.getElementById('popup');
+            popup.close();
+        });
+
+        var btn = document.querySelector('#createThreadButton');
+        btn.addEventListener('click', function() {
+            var popup = document.getElementById('popup');
+            popup.showModal();
+        });
+
+        var btnSubmit = document.querySelector('#submitButton');
+        btnSubmit.addEventListener('click', function() {
+            var title = document.querySelector('#title').value.trim();
+            var content = document.querySelector('#content').value.trim();
+            var description = document.querySelector('#description').value.trim();
+            if (title && content && description) {
+                var newThread = {
+                    id: Date.now(),
+                    title: title,
+                    content: content,
+                    description: description,
+                    comments: []
+                };
+            threads.push(newThread);
+            addThread(newThread);
+            localStorage.setItem('threads', JSON.stringify(threads));
+            }
+        });
+
+
 
     </script>
 </body>
