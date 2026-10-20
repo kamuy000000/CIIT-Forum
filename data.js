@@ -9,12 +9,14 @@ var threads = [
             {
                 author: "Test 1",
                 date: Date.now(),
-                content: "Hey there"
+                content: "Hey there",
+                replies: []
             },
             {
                 author: "Test 2",
                 date: Date.now(),
-                content: "Woah"
+                content: "Woah",
+                replies: []
             }
         ]
     },
@@ -28,12 +30,14 @@ var threads = [
             {
                 author: "Test 3",
                 date: Date.now(),
-                content: "I like this thread"
+                content: "I like this thread",
+                replies: []
             },
             {
                 author: "Test 4",
                 date: Date.now(),
-                content: "Me too"
+                content: "Me too",
+                replies: []
             }
         ]
     }

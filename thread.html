@@ -24,8 +24,7 @@
         <div class= "header"> </div>
         <textarea></textarea>
         <button type ="button" id="commentButton">add comment</button>
-        <div class= "comments">
- </div>
+        <div class= "comments"></div>
     </div>
     <script src="data.js"></script>
     <script>
@@ -45,6 +44,7 @@
         header.insertAdjacentHTML('beforeend', headerHtml) 
 
         function addComment(comment) {
+        comment.replies = comment.replies || [];
         var commentHtml = `
             <div class = "comment">
                 <div class ="top-comment">
@@ -58,12 +58,30 @@
                 <div class ="comment-content">
                     ${comment.content}
                 </div>
+                <button type= "button" class="replyButton">Reply</button>
+                <div class="reply-form" hidden>
+                    <textarea class="reply-text"></textarea>
+                    <button type="button" class="submit-reply">Add reply</button>
+                </div>
+                <div class="replies">
+                    ${comment.replies.map(reply => `
+                        <div class="reply">
+                            <div class="top-reply">
+                                <p class="user">${reply.author}</p>
+                                <p class="reply-ts">${new Date(reply.date).toLocaleString()}</p>
+                            </div>
+                            <div class="reply-content">
+                                ${reply.content}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
             </div>
             `
             comments.insertAdjacentHTML('beforeend', commentHtml);
-
         }
         
+
         var comments = document.querySelector('.comments');
         for (let comment of thread.comments) {
             addComment(comment);
@@ -85,6 +103,7 @@
                 content: txt,
                 date: Date.now(),
                 author: "User",
+                replies: []
             }
             addComment(comment);
             textarea.value = "";
@@ -92,5 +111,47 @@
             thread.comments.push(comment);
             localStorage.setItem("threads", JSON.stringify(threads));
         });
+
+           var commentElements = document.querySelectorAll('.comment');
+        commentElements.forEach(commentElement => {
+            var replyButton = commentElement.querySelector('.replyButton');
+            var replyForm = commentElement.querySelector('.reply-form');
+            var submitReplyButton = commentElement.querySelector('.submit-reply');
+            var replyTextarea = commentElement.querySelector('.reply-text');
+            var repliesContainer = commentElement.querySelector('.replies');
+
+            replyButton.addEventListener('click', function() {
+                replyForm.hidden = !replyForm.hidden;
+            });
+
+            submitReplyButton.addEventListener('click', function() {
+                var replyContent = replyTextarea.value.trim();
+                if (replyContent === "") {
+                    return;
+                }
+                var reply = {
+                    content: replyContent,
+                    date: Date.now(),
+                    author: "User"
+                };
+                comment.replies.push(reply);
+                localStorage.setItem("threads", JSON.stringify(threads));
+                var replyElement = document.createElement("div");
+                replyElement.className = "reply";
+                replyElement.innerHTML = `
+                    <div class="top-reply">
+                        <p class="user">${reply.author}</p>
+                        <p class="reply-ts">${new Date(reply.date).toLocaleString()}</p>
+                    </div>
+                    <div class="reply-content">
+                        ${reply.content}
+                    </div>
+                `;
+                repliesContainer.append(replyElement);
+                replyTextarea.value = "";
+                replyForm.hidden = true;
+            });
+        });
+
     </script>
 </body>

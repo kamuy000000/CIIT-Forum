@@ -84,13 +84,19 @@
         .searchButton, .loginButton, .createThreadButton:hover{
             background-color: #21697f;
         }
+        .replyButton{
+            color: blue;
+            border: none;
+            background-color: transparent;
+            text-decoration: underline;
+        }
         #cancelButton{
             float: left;
             background-color: rgb(236, 159, 159);
             padding: 5px 10px;
         }
         #cancelButton:hover{
-            background-color: rgb(235, 120, 120);
+            background-color: rgb(236, 93, 93);
         }
         #submitButton{
             float: right;
@@ -99,6 +105,16 @@
         }
         #submitButton:hover{
             background-color: rgb(120, 235, 120);
+        }
+        #popup{
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        h3{
+            font-family: Poppins, sans-serif;
+        }
+        #title, #description, #content{
+            width: 100%;
+            font-family: Poppins, sans-serif;
         }
         .top-bar{
             background-color: #02344D;
