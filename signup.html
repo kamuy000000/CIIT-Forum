@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Sign up · CIIT Forum</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="app">
+    <header class="top">
+        <a class="brand" href="login.html">CIIT Forum</a>
+    </header>
+
+    <div class="layout guest">
+        <main>
+            <section class="card narrow">
+                <h1>Create account</h1>
+                <form id="signup" novalidate>
+                    <label for="name">Display name</label>
+                    <input id="name" maxlength="30" autocomplete="nickname">
+
+                    <label for="email">Email</label>
+                    <input id="email" type="email" autocomplete="email">
+
+                    <label for="pw">Password</label>
+                    <input id="pw" type="password" autocomplete="new-password">
+                    <p class="hint">At least 8 characters, with a letter and a number.</p>
+
+                    <label for="pw2">Confirm password</label>
+                    <input id="pw2" type="password" autocomplete="new-password">
+
+                    <label class="chk">
+                        <input type="checkbox" id="ag">
+                        I have read and agree to the&nbsp;<a href="rules.html" target="_blank">Community Rules</a>
+                    </label>
+
+                    <div class="err" id="err" role="alert"></div>
+                    <button class="btn primary">Sign up</button>
+                </form>
+                <p>Already have an account? <a href="login.html">Log in</a></p>
+            </section>
+        </main>
+    </div>
+
+    <footer><a href="rules.html" target="_blank">Community Rules</a></footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="data.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

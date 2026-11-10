@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Community Rules</title><link rel="stylesheet" href="style.css">
+</head><body>
+<header class="top"><a class="brand" href="index.html">CIIT Forum</a></header>
+<main><h1>Community Rules</h1><p>These rules keep the forum friendly for everyone. Breaking them can lead to removed content, a warning, suspension or a ban.</p>
+<ol id="r"></ol>
+<div class="card"><h2>What happens if rules are broken</h2><p><b>Warning</b> shown after your next login. <b>Suspension</b> blocks login until the admin lifts it. <b>Ban</b> is permanent. Any member can report a post, comment or person, and you can block anyone.</p></div>
+<a class="btn" href="index.html">Back to the forum</a></main>
+<script src="data.js"></script>
+<script>document.getElementById('r').innerHTML=RULES.map(r=>`<li class="card"><h3>${esc(r[0])}</h3><p>${esc(r[1])}</p></li>`).join('')</script>
+</body></html>

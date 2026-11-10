@@ -1,102 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>CIIT Forum</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="top-bar">
-        <h1>
-            FORUM
-        </h1>
-        <div class="off-screen-menu">
-            <ul>
-                <button type = "button" class="loginButton" onclick = "window.location.href='login.php'">login</button>
-                <button type = "button" class="searchButton" onclick = "window.location.href='search.php'">search</button>
-                <button type = "button" class="createThreadButton" id="createThreadButton">create thread</button>
-            </ul>
-        </div>
-                <nav>
-            <div class="ham-menu">
-                <span></span>
-                <span></span>
-                <span></span>  
-            </div>
-        </nav>
-    </div>
-    <div class="main">
-        <ol>
-        </ol>
-    </div>
-    <dialog id="popup">
-        <form method="dialog">
-            <h3>Create a new thread</h3>
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required>
-            <label for="content">Content:</label>
-            <textarea id="content" name="content" required></textarea>
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" required></textarea>
-            <menu>
-                <button id="cancelButton">Cancel</button>
-                <button id="submitButton">Submit</button>
-            </menu>
+<body class="app">
+    <a class="skip" href="#app">Skip to content</a>
+
+    <header class="top">
+        <button class="burger" id="bg" type="button" aria-label="Open menu" aria-controls="side" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <a class="brand" href="#/feed">CIIT Forum</a>
+        <form id="sf" role="search">
+            <label class="sr" for="q">Search</label>
+            <input id="q" type="search" placeholder="Search threads, groups, people">
         </form>
+        <div class="auth-actions" id="auth-actions" hidden>
+            <a class="btn small ghost" href="login.html">Log in</a>
+            <a class="btn small primary" href="signup.html">Sign up</a>
+        </div>
+    </header>
+
+    <div class="layout">
+        <nav class="side" id="side" aria-label="Main">
+            <a class="side-link" href="#/feed" data-nav="feed">Home</a>
+            <a class="side-link" href="#/groups" data-nav="groups">Groups</a>
+            <a class="side-link" href="#/events" data-nav="events">Events</a>
+            <a class="side-link" href="#/messages" data-nav="messages" data-user-only>Messages</a>
+            <a class="side-link" href="#/profile" data-nav="profile" id="profile-link" data-user-only>Profile</a>
+            <a class="side-link" id="li" href="login.html" hidden>Log in</a>
+            <a class="side-link" id="su" href="signup.html" hidden>Sign up</a>
+            <button class="side-link out" id="lo" type="button">Log out</button>
+        </nav>
+
+        <main id="app"></main>
+
+        <aside class="rside" id="rside" aria-label="Suggestions">
+            <section class="card" id="join-cta" hidden>
+                <h2>Join the conversation</h2>
+                <p>Log in to comment, like, join groups and message other students.</p>
+                <div class="row">
+                    <a class="btn" href="login.html">Log in</a>
+                    <a class="btn" href="signup.html">Sign up</a>
+                </div>
+            </section>
+            <section class="card">
+                <h2 id="sg-title">Suggested groups</h2>
+                <div id="sg"></div>
+            </section>
+            <section class="card" id="pp-card">
+                <h2>People you may know</h2>
+                <div id="pp"></div>
+            </section>
+            <section class="card">
+                <h2>Guidelines</h2>
+                <ul>
+                    <li>Be respectful</li>
+                    <li>No harassment or hate speech</li>
+                    <li>No spam or unauthorized selling</li>
+                </ul>
+                <a href="rules.html" target="_blank">Read all rules</a>
+            </section>
+        </aside>
+    </div>
+    <div class="scrim" id="scrim"></div>
+
+    <footer>
+        <a href="rules.html" target="_blank">Community Rules</a> · <a href="admin.html">Admin</a><br>
+        <label class="chk"><input type="checkbox" id="off"> Error Test lost connection</label>
+        <button class="lnk" id="reset" type="button">Reset demo data</button>
+    </footer>
+
+    <dialog id="dlg"></dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="data.js"></script>
-    <script>
-        // debugging purposes
-        // console.log(threads);
-        var container = document.querySelector('ol');
-        for (let thread of threads){
-         var html = `
-         <li class = "row">
-                <a href ="thread.html?id=${thread.id}">
-                    <h4 class = "title">
-                        ${thread.title}
-                    </h4>
-            <div class = "bottom">
-                <p class = "content">
-                    ${thread.content}
-                </p>
-                <p class ="comment-count">
-                    ${thread.comments.length} comments
-                </p>
-            </div>
-            </a>
-        </li>
-        `
-        container.insertAdjacentHTML('beforeend', html);
-        }
-
-        var btnCancel = document.querySelector('#cancelButton');
-        btnCancel.addEventListener('click', function() {
-            var popup = document.getElementById('popup');
-            popup.close();
-        });
-
-        var btn = document.querySelector('#createThreadButton');
-        btn.addEventListener('click', function() {
-            var popup = document.getElementById('popup');
-            popup.showModal();
-        });
-
-        var btnSubmit = document.querySelector('#submitButton');
-        btnSubmit.addEventListener('click', function() {
-            var title = document.querySelector('#title').value.trim();
-            var content = document.querySelector('#content').value.trim();
-            var description = document.querySelector('#description').value.trim();
-            if (title && content && description) {
-                var newThread = {
-                    id: Date.now(),
-                    title: title,
-                    content: content,
-                    description: description,
-                    comments: []
-                };
-            threads.push(newThread);
-            addThread(newThread);
-            localStorage.setItem('threads', JSON.stringify(threads));
-            }
-        });
-
-
-
-    </script>
+    <script src="app.js"></script>
 </body>
+</html>

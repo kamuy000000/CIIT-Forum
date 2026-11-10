@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Log in · CIIT Forum</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="app">
+    <header class="top">
+        <a class="brand" href="login.html">CIIT Forum</a>
+    </header>
+
+    <div class="layout guest">
+        <main>
+            <section class="card narrow">
+                <h1>Log in</h1>
+                <form id="login" novalidate>
+                    <label for="email">Email</label>
+                    <input id="email" type="email" autocomplete="email">
+
+                    <label for="pw">Password</label>
+                    <input id="pw" type="password" autocomplete="current-password">
+
+                    <label class="chk"><input type="checkbox" id="sp"> Show password</label>
+
+                    <p class="err" id="err" role="alert"></p>
+                    <button class="btn primary">Log in</button>
+                </form>
+                <p>New here? <a href="signup.html">Create an account</a></p>
+                <p class="hint">Demo account: testuser1@example.com / Password1</p>
+            </section>
+        </main>
+    </div>
+
+    <footer><a href="rules.html" target="_blank">Community Rules</a></footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="data.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>
