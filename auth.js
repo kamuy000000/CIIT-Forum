@@ -1,4 +1,4 @@
-// Login logic
+// Logic for login
 const SK = KEY + '_s';
 const $ = s => document.querySelector(s);
 
@@ -10,8 +10,9 @@ function toast(m, bad) {
     toast.t = setTimeout(() => t.className = 'toast', 3500);
 }
 
+// Saved Logged in straight to forum/admin page
 const here = getUser(localStorage.getItem(SK));
-if (here && here.role === 'user' && here.status === 'active') location.replace('index.html');
+if (here && here.status === 'active') location.replace(here.role === 'admin' ? 'admin.html' : 'index.html');
 
 // Message left by the previous page (for example after logging out)
 const flash = sessionStorage.getItem('flash');
@@ -27,11 +28,11 @@ if ($('#login')) {
         if (!/^\S+@\S+\.\S+$/.test(email)) return err('Enter a valid email address, like name@example.com.');
         const u = db.users.find(x => x.email === email);
         if (!u || u.pass !== pw) return err('Email or password is incorrect. Check both and try again.');
-        if (u.role === 'admin') return err('Admin accounts sign in on the admin page.');
         if (u.status === 'banned') return err('This account has been banned. Reason: ' + (u.reason || 'Rule violation') + '.');
         if (u.status === 'suspended') return err('This account is suspended. Reason: ' + (u.reason || 'Rule violation') + '. Contact the admin to appeal.');
         localStorage.setItem(SK, u.id);
         sessionStorage.setItem('flash', 'Welcome back, ' + u.name + '.');
+        if (u.role === 'admin') { location.href = 'admin.html'; return; }
         const next = sessionStorage.getItem('next') || '#/feed';
         sessionStorage.removeItem('next');
         location.href = 'index.html' + next;

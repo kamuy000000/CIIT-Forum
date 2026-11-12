@@ -1,4 +1,4 @@
-const AK = KEY + '_a', app = document.getElementById('app'), topEl = document.getElementById('top'), dlg = document.getElementById('dlg');
+const AK = KEY + '_s', app = document.getElementById('app'), topEl = document.getElementById('top'), dlg = document.getElementById('dlg');
 const $ = (s, r = document) => r.querySelector(s);
 const adm = () => { const u = getUser(localStorage.getItem(AK)); return u && u.role === 'admin' ? u : null; };
 let tab = 'users', q = '';
@@ -7,15 +7,10 @@ const logit = t => { db.log.unshift({ t: Date.now(), text: adm().name + ' ' + t 
 
 function render() {
   const a = adm();
-  if (!a) {
-    topEl.innerHTML = `<a class="brand" href="#">${APP} Admin</a><span class="sp"></span><a class="btn ghost small" href="index.html">Back to forum</a>`;
-    app.innerHTML = `<section class="card narrow"><h1>Admin login</h1><form id="f" novalidate><label for="e">Email</label><input id="e" type="email"><label for="p">Password</label><input id="p" type="password"><p class="err" id="err" role="alert"></p><button class="btn primary">Log in</button></form><p class="hint">Demo: admin@example.com / Admin123!</p></section>`;
-    $('#f').onsubmit = e => { e.preventDefault(); const u = db.users.find(x => x.email === $('#e').value.trim().toLowerCase() && x.pass === $('#p').value && x.role === 'admin'); if (!u) return $('#err').textContent = 'Email or password is incorrect, or this is not an admin account.'; localStorage.setItem(AK, u.id); render(); };
-    return;
-  }
+  if (!a) { location.replace('login.html'); return; }
   const open = db.reports.filter(r => r.status === 'open').length;
-  topEl.innerHTML = `<a class="brand" href="#">${APP} Admin</a><nav class="tabs" aria-label="Admin">${[['users', 'Users'], ['reports', 'Reports' + (open ? ' (' + open + ')' : '')], ['log', 'Activity log']].map(([k, l]) => `<a href="#" data-tab="${k}" ${tab === k ? 'class="on" aria-current="page"' : ''}>${l}</a>`).join('')}</nav><button class="btn ghost small" id="lo">Log out</button>`;
-  $('#lo').onclick = () => { localStorage.removeItem(AK); render(); };
+  topEl.innerHTML = `<a class="brand" href="#">${APP} Admin</a><nav class="tabs" aria-label="Admin">${[['users', 'Users'], ['reports', 'Reports' + (open ? ' (' + open + ')' : '')], ['log', 'Activity log']].map(([k, l]) => `<a href="#" data-tab="${k}" ${tab === k ? 'class="on" aria-current="page"' : ''}>${l}</a>`).join('')}</nav><a class="btn ghost small" href="index.html">View forum</a><button class="btn ghost small" id="lo">Log out</button>`;
+  $('#lo').onclick = () => { localStorage.removeItem(AK); sessionStorage.setItem('flash', 'You have been logged out.'); location.href = 'login.html'; };
   topEl.querySelectorAll('[data-tab]').forEach(x => x.onclick = e => { e.preventDefault(); tab = x.dataset.tab; render(); });
   app.innerHTML = tab === 'users' ? users() : tab === 'reports' ? reports() : log();
   const s = $('#us'); if (s) s.oninput = () => { q = s.value; const p = s.selectionStart; render(); const n = $('#us'); n.focus(); n.setSelectionRange(p, p); };
@@ -64,3 +59,4 @@ app.addEventListener('click', e => {
   $('#af').onsubmit = ev => { ev.preventDefault(); const rs = $('#ar').value; dlg.close(); apply(u, type, rs, rep); };
 });
 render();
+const flash = sessionStorage.getItem('flash'); if (flash) { sessionStorage.removeItem('flash'); toast(flash); }

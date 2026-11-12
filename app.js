@@ -27,8 +27,6 @@ function header() {
     $('#join-cta').hidden = !!me;
     $('#pp-card').hidden = !me;
     $('#lo').hidden = !me;
-    $('#li').hidden = !!me;
-    $('#su').hidden = !!me;
     document.querySelectorAll('[data-user-only]').forEach(el => el.hidden = !me);
     if (me) $('#profile-link').href = '#/profile/' + me.id;
     document.querySelectorAll('[data-nav]').forEach(a => {
